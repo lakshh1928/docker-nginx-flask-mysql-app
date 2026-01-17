@@ -25,9 +25,9 @@ services:
       - list
 
   app1:
-    image: laksh
+    image: l4ksh1928/listmaker:latest
     container_name: app1
-    env_file: l4ksh1928/listmaker:latest
+    env_file: 
       - .env
     depends_on:
       - db
