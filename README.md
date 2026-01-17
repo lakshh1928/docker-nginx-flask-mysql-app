@@ -1,61 +1,32 @@
-# DevOps To-Do List Application
+Project Title: Automated Cloud Deployment Pipeline with Docker & GitHub Actions
+🚀 Project Overview This project demonstrates a fully automated DevOps pipeline for a Flask-based web application ("List Maker"). It moves beyond manual deployment by implementing a Continuous Deployment (CD) workflow that updates a live server automatically whenever code is pushed to the main branch.
 
-A simple containerized To-Do List application built to practice DevOps and Cloud fundamentals.
+⚙️ Architecture & Tech Stack
 
-## Tech Stack
-- Flask (Python)
-- MySQL
-- Nginx
-- Docker
-- Docker Compose
+Containerization: Docker & Docker Compose (Multi-container architecture: App + Nginx).
 
-## Architecture
-- Nginx as reverse proxy and load balancer
-- Two Flask application containers
-- MySQL database with persistent volume
-- Docker bridge network for service communication
+Orchestration: Docker Compose (Service management).
 
-## Features
-- Add and fetch tasks via REST API
-- Load balancing using Nginx
-- Database initialization using SQL script
-- Environment variables via `.env`
-- Database retry logic on startup
+CI/CD: GitHub Actions (Automation).
 
-## Project Structure
-.
-├── app.py  
-├── Dockerfile  
-├── docker-compose.yml  
-├── nginx.conf  
-├── requirements.txt  
-├── templates/  
-│   └── index.html  
-├── db/  
-│   └── init.sql  
-└── .env  
+Reverse Proxy: Nginx (Port forwarding & static file serving).
 
-## How to Run
+Infrastructure: Self-Hosted Runner on Ubuntu VM (Bypassing firewall restrictions).
 
-### Prerequisites
-- Docker
-- Docker Compose
+Registry: Docker Hub.
 
-### Start the application
-docker-compose up --build
+🛠️ The Pipeline Workflow
 
-### Access the application
-http://localhost
+Dev: Developer pushes code to GitHub.
 
-## API Endpoints
-- GET /tasks — Fetch all tasks
-- POST /add — Add a new task
+CI (Build): GitHub Cloud Runner builds the Docker image and pushes it to Docker Hub.
 
-## DevOps Concepts Used
-- Docker containerization
-- Multi-container orchestration
-- Nginx reverse proxy and load balancing
-- Docker networking
-- Persistent volumes
-- Environment-based configuration
+CD (Deploy): A Self-Hosted Runner inside the private VM detects the successful build.
 
+Update: The runner pulls the new image and performs a rolling update using Docker Compose, ensuring the latest version is live without manual intervention.
+
+💡 Key Challenges Solved
+
+Private Network Deployment: Implemented a Self-Hosted GitHub Runner to enable secure deployment to a VM sitting behind a strict firewall/NAT, removing the need to expose SSH ports to the public internet.
+
+Environment Consistency: Solved "it works on my machine" issues by dockerizing the entire stack (App + Web Server).
