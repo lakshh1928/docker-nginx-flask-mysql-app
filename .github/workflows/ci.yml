@@ -28,3 +28,19 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/listmaker:latest
+
+  
+  Deploy:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      - name: check
+        uses: actions/checkout@v3
+
+      - name: Pull and deploy
+        run: |
+         docker-compose pull
+         docker-compose up -d --remove-orphans
+         docker image prune -f
+  
