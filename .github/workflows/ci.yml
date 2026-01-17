@@ -31,7 +31,7 @@ jobs:
 
   
   Deploy:
-    needs: build
+    needs: build-push
     runs-on: self-hosted
 
     steps:
